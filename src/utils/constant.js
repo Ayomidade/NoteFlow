@@ -1,0 +1,1 @@
+export const API_BASE_URL = "https://notepad-api-ndb6.onrender.com/api";

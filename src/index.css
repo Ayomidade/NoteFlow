@@ -1,0 +1,31 @@
+:root {
+  /* ========= COLOR PALETTE ========= */
+  --color-primary: #1C274C;
+  --color-secondary: #4b5563;
+  --color-accent: #2b85ff;
+  --primary-dark: #0b1947;
+  --text-color: #192338;
+  --text-secondary: #ef863e;
+  --muted-text: #6b7280;
+  --font-primary: "Inter", sans-serif;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #b91c1c;
+  --color-bg: #F9FAFB;
+  --color-card: #FFFFFF;
+  --color-border: #E5E7EB;
+}
+
+@layer base {
+  /* html {
+    font-family:  "san-serif";
+  } */
+
+  body {
+    background: #fdfeff;
+    margin: 0;
+    padding: 0px;
+    font-family: var(--font-primary);
+    color: var(--text-color);
+  }
+}

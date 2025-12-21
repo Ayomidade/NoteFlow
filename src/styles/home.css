@@ -1,0 +1,40 @@
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+}
+
+.notes-grid {
+  display: grid;
+  margin-top: 32px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.new-note {
+  font-size: 32px;
+  color: white;
+}
+
+.new-btn {
+  display: flex;
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  border-radius: 16px;
+  width: 64px;
+  background: var(--color-accent);
+  border: 1px solid gray;
+  justify-content: center;
+  align-items: center;
+}
+
+.note-modal{
+  width: 50%;
+  background: var(--color-bg);
+  padding: 20px;
+  margin:  auto;
+  margin-top: 120px;
+  border-radius: 10px;
+}

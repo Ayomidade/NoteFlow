@@ -1,0 +1,64 @@
+.edit-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.edit-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.input-label {
+  font-size: 13px;
+  line-height: 16px;
+  color: gray;
+}
+
+.edit-title-input {
+  font-size: 16px;
+  line-height: 20px;
+  outline: none;
+  border: 1px solid var(--color-border);
+  padding: 8px;
+  border: none;
+  color: var(--text-color);
+}
+
+.edit-content-input {
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  outline: none;
+  color: var(--text-color);
+  border: 1px solid var(--color-border);
+}
+
+.add-edit-btn {
+  padding: 10px;
+  border: none;
+  background: var(--color-accent);
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.edit-tag-container {
+  margin-top: 5px;
+}
+
+.close-edit-btn {
+  cursor: pointer;
+  color: var(--color-accent);
+  margin-bottom: 20px;
+  position: absolute;
+  right: 0px;
+  top: -5px;
+}

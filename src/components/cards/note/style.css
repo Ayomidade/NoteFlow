@@ -1,0 +1,84 @@
+.note-container {
+  padding: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-border);
+  background-color: #ffffff;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.note-container:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.inner-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-btn {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  color: var(--color-accent);
+}
+
+.pinned {
+  color: var(--color-accent);
+}
+
+.not-pinned {
+  color: var(--primary-dark);
+}
+
+.note-title {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+
+.note-date {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #64748B;
+}
+
+.note-tag {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #64748B;
+}
+
+.note-btn {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.edit-btn:hover {
+  color: var(--color-success);
+}
+
+.delete-btn:hover {
+  color: var(--color-warning);
+}
+
+.note-content {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #4a5058;
+}
+
+.second-inner-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
