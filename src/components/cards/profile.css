@@ -36,7 +36,11 @@
   text-align: center;
 }
 
-.logout-icon{
-margin: 5px;
-cursor: pointer;
+.logout-icon {
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+
+.logout-icon:hover {
+  color: var(--color-primary);
 }

@@ -70,10 +70,12 @@
 }
 
 .note-content {
+  font-size: 14px;
+  line-height: 20px;
   margin-top: 0.5rem;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  color: #4a5058;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  
 }
 
 .second-inner-container {

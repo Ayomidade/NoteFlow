@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import NoteCard from "../../components/cards/note/NoteCard";
 import "../../styles/home.css";
@@ -7,101 +7,132 @@ import AddEditNote from "./AddEditNote";
 import Modal from "react-modal";
 import axiosInstance from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+
+// fetch notes from server
+export const fetchNotes = async () => {
+  try {
+    const response = await axiosInstance.get("/notes");
+    return response.data.notes;
+  } catch (error) {
+    if (error.response.status === 403) {
+      localStorage.removeItem("token");
+    }
+    // console.error("Failed to fetch notes:", error);
+  }
+};
 
 const Home = () => {
+  const [notes, setNotes] = useState([]);
+  const [userInfo, setUserInfo] = useState(null);
+  const navigate = useNavigate();
   const [openEditModal, setOpenEditModal] = useState({
     isShow: false,
     type: "add",
     data: null,
   });
+  const [deleting, setDeleting] = useState(false);
 
   // close modal
   const closeModal = () => {
     setOpenEditModal({ isShow: false, type: "add", data: null });
   };
-  const [notes, setNotes] = useState([]);
 
   // fetch notes from server
-  const fetchNotes = async () => {
+  const handleFetchNotes = async () => {
     try {
-      const response = await axiosInstance.get("/notes");
-      setNotes(response.data.notes || []);
+      const notesList = await fetchNotes();
+      setNotes(notesList);
     } catch (error) {
-      console.error("Failed to fetch notes:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchNotes();
-  }, []);
-
-  // Time helper function
-  function timeAgo(date) {
-    const now = new Date();
-    const secondsPast = (now.getTime() - new Date(date).getTime()) / 1000;
-
-    if (secondsPast < 60) {
-      return `${Math.floor(secondsPast)} seconds ago`;
-    }
-    if (secondsPast < 3600) {
-      return `${Math.floor(secondsPast / 60)} minutes ago`;
-    }
-    if (secondsPast < 86400) {
-      return `${Math.floor(secondsPast / 3600)} hours ago`;
-    }
-    if (secondsPast < 2592000) {
-      return `${Math.floor(secondsPast / 86400)} days ago`;
-    }
-    if (secondsPast < 31104000) {
-      return `${Math.floor(secondsPast / 2592000)} months ago`;
-    }
-    return `${Math.floor(secondsPast / 31104000)} years ago`;
-  }
-
-  const [userInfo, setUserInfo] = useState(null);
-  const navigate = useNavigate();
-
-  const getUserInfo = async () => {
-    try {
-      const response = await axiosInstance.post("/user");
-
-      console.log(response.data.message);
-    } catch (error) {
-      if (error.response.status === 401) {
-        localStorage.clear();
+      if (error.response && error.response.status === 403) {
+        // localStorage.removeItem("token");
         navigate("/login");
       }
     }
   };
 
-  useEffect(() => {
+  // Time helper function
+  // function timeAgo(date) {
+  //   const now = new Date();
+  //   const secondsPast = (now.getTime() - new Date(date).getTime()) / 1000;
+
+  //   if (secondsPast < 60) {
+  //     return `${Math.floor(secondsPast)} seconds ago`;
+  //   }
+  //   if (secondsPast < 3600) {
+  //     return `${Math.floor(secondsPast / 60)} minutes ago`;
+  //   }
+  //   if (secondsPast < 86400) {
+  //     return `${Math.floor(secondsPast / 3600)} hours ago`;
+  //   }
+  //   if (secondsPast < 2592000) {
+  //     return `${Math.floor(secondsPast / 86400)} days ago`;
+  //   }
+  //   if (secondsPast < 31104000) {
+  //     return `${Math.floor(secondsPast / 2592000)} months ago`;
+  //   }
+  //   return `${Math.floor(secondsPast / 31104000)} years ago`;
+  // }
+
+  const getUserInfo = async () => {
+    try {
+      const response = await axiosInstance.get("/user");
+      const fullName =
+        response.data.message.firstname + " " + response.data.message.lastname;
+      setUserInfo(fullName);
+    } catch (error) {
+      if (error.response.status === 403) {
+        // localStorage.removeItem("token");
+        navigate("/login");
+      }
+    }
+  };
+
+  useLayoutEffect(() => {
     getUserInfo();
-  }),
-    [];
+    handleFetchNotes();
+  }, []);
 
   // Edit note handler
   const handleEditNOte = (note) => {
     setOpenEditModal({ isShow: true, type: "edit", data: note });
   };
 
+  // Delete note handler
+  const deleteNote = async (noteId) => {
+    setDeleting(true);
+    try {
+      await axiosInstance.delete(`/notes/${noteId}`);
+      handleFetchNotes();
+    } catch (error) {
+      if (error.response.status === 403) {
+        navigate("/login");
+      }
+    }finally{
+      setDeleting(false);
+    }
+  };
   return (
     <>
-      <Navbar />
+      <Navbar userInfo={userInfo} />
 
       <div className="container">
         {notes ? (
           <div className="notes-grid">
             {notes.map((note) => (
               <NoteCard
+                key={note._id}
                 title={note.title}
                 content={note.content}
-                date={timeAgo(note.createdAt)}
+                date={note.updatedAt}
                 tags={note._id}
                 isPinned={true}
                 onEdit={() => {
                   handleEditNOte(note);
                 }}
-                onDelete={() => {}}
+                onDelete={() => {
+                  deleteNote(note._id);
+                }}
                 onPinNote={() => {}}
               />
             ))}
@@ -109,16 +140,8 @@ const Home = () => {
         ) : (
           <p>No note found</p>
         )}
-        {/* <NoteCard
-            title={"Note title"}
-            content={"A new note app content"}
-            date={"15th Dec 2025"}
-            tags={"#note"}
-            isPinned={true}
-            onEdit={() => {}}
-            onDelete={() => {}}
-            onPinNote={() => {}}
-          /> */}
+
+        {deleting && <div className="deleting-overlay">Deleting...</div>}
 
         <button
           className="new-btn"
@@ -136,7 +159,12 @@ const Home = () => {
           contentLabel=""
           className="note-modal"
         >
-          <AddEditNote onClose={closeModal} onSuccess={fetchNotes} />
+          <AddEditNote
+            onClose={closeModal}
+            onSuccess={handleFetchNotes}
+            type={openEditModal.type}
+            note={openEditModal.data}
+          />
         </Modal>
       </div>
     </>

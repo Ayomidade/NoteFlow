@@ -53,21 +53,28 @@ const Signup = () => {
         password,
       });
 
-      // console.log(response.data);
-
+      // Successful Sign-up
       if (response.data && response.data.token) {
         setLoading(false);
         localStorage.setItem("token", response.data.token);
-        navigate("/dashboard")
+        navigate("/dashboard");
       }
     } catch (error) {
-      console.log("Error occurred:",error.message);
+      // Error handling
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setError(error.response.data.message);
+      } else {
+        setError("Sign-up failed, please try again.");
+      }
+      setLoading(null);
     }
   };
   return (
     <>
-      {/* <Navbar /> */}
-
       <AuthLayout>
         <div className="form-container">
           <div className="form-inner-container">

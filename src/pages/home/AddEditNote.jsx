@@ -3,27 +3,69 @@ import "../../styles/edit.css";
 import { MdClose } from "react-icons/md";
 import TagInput from "../../components/input/TagInput";
 import axiosInstance from "../../utils/axios";
+import { useParams } from "react-router-dom";
 
-const AddEditNote = ({ onClose, onSuccess }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+const AddEditNote = ({ onClose, onSuccess, note, type }) => {
+  const [title, setTitle] = useState(note?.title || "");
+  const [content, setContent] = useState(note?.content || "");
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { id } = useParams();
 
-  const handleAddEditNote = async () => {
+  const addNote = async () => {
     setLoading(true);
     try {
       const noteData = { title, content, tags };
-      // API CALL TO ADD/EDIT NOTE
+      // API CALL TO ADD
       const response = await axiosInstance.post("/notes", noteData);
       if (response.data) {
         if (onSuccess) await onSuccess();
         onClose();
       }
     } catch (error) {
-      console.log("Error occurred:", error.message);
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const editNote = async () => {
+    setLoading(true);
+    try {
+      const noteData = { title, content, tags };
+      // API TO EDIT NOTE
+      const response = await axiosInstance.patch(`/notes/${id}`, noteData);
+      if (response.data) {
+        if (onSuccess) await onSuccess();
+        onClose();
+      }
+      onClose();
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleNote = () => {
+    if (!title) {
+      setError("Title is required");
+    }
+    if (!content) {
+      setError("Content is required");
+    }
+
+    if (type === "edit") {
+      editNote();
+    } else {
+      addNote();
     }
   };
 
@@ -60,9 +102,11 @@ const AddEditNote = ({ onClose, onSuccess }) => {
           <TagInput tags={tags} setTags={setTags} />
         </div>
 
+        {error && <p className="auth-error">{error}</p>}
+
         <button
           className="add-edit-btn"
-          onClick={handleAddEditNote}
+          onClick={handleNote}
           disabled={loading}
         >
           {loading ? "Please wait..." : "Add Note"}

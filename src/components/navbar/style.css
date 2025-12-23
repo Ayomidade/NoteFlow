@@ -27,3 +27,15 @@ nav {
 .logo-name span {
   color: var(--text-secondary);
 }
+
+@media (max-width: 600px) {
+  .logo-name {
+    font-size: 18px;
+  }
+  .logo-container {
+    gap: 8px;
+  }
+  .logo-container img {
+    width: 40px;
+  }
+}
