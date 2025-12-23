@@ -20,7 +20,7 @@ NoteFlow is a simple and intuitive note-taking application built with React for 
 1. Clone the frontend repository:
 
 ```bash
-git clone https://github.com/ayomidade/note-app.git
+git clone https://github.com/ayomidade/NoteFlow.git
 ```
 
 and backend repository:
