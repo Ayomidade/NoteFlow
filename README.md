@@ -1,16 +1,68 @@
-# React + Vite
+## NoteFlow - A Simple Note Taking App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NoteFlow is a simple and intuitive note-taking application built with React for the frontend and Node.js with Express for the backend. It allows users to create, read, update, and delete notes seamlessly.
 
-Currently, two official plugins are available:
+### Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User Authentication (Signup/Login)
+- Create, Read, Update, and Delete Notes
+- Responsive Design
+- JWT-based Authentication
 
-## React Compiler
+### Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Frontend: React, Axios, React Router
+- Backend: Node.js, Express, MongoDB
+- Authentication: JSON Web Tokens (JWT)
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone the frontend repository:
+
+```bash
+git clone https://github.com/ayomidade/note-app.git
+```
+
+and backend repository:
+
+```bash
+git clone https://github.com/ayomidade/Notepad-API.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd note-app
+```
+
+3. Install dependencies for frontend:
+
+```bash
+npm install
+```
+
+4. Set up environment variables for the backend (e.g., MongoDB connection string, JWT secret).
+5. Start the backend server:
+
+```bash
+npm run dev
+```
+
+6. Start the frontend development server:
+
+```bash
+npm run dev
+```
+
+7. Open your browser and navigate to `http://localhost:5173` to access the application.
+
+### Usage
+
+- Sign up for a new account or log in with existing credentials.
+- Create new notes using the "New Note" button.
+- Edit or delete existing notes as needed.
+- Log out when you're done.
+
+### Contributors
+
+- Ayomide Samuel (email:ayomikesam@gmail.com, Github: ayomidade, X: @myk3l, Instagram: theayomide_samuel)
