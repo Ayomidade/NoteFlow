@@ -65,4 +65,4 @@ npm run dev
 
 ### Contributors
 
-- Ayomide Samuel (email:ayomikesam@gmail.com, Github: ayomidade, X: @myk3l, Instagram: theayomide_samuel)
+- [Ayomidade](https://x.com/myk3l)
