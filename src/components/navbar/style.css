@@ -5,17 +5,15 @@ nav {
   padding: 10px 30px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .logo-container {
   display: flex;
   justify-items: center;
   align-items: start;
-}
-
-.logo {
-  /* width: 50px; */
-  /* margin: 0; */
 }
 
 .logo-name {
@@ -32,10 +30,17 @@ nav {
   .logo-name {
     font-size: 18px;
   }
+
   .logo-container {
-    gap: 8px;
+    gap: 5px;
   }
+
   .logo-container img {
     width: 40px;
+    margin: 0;
+  }
+
+  nav{
+    padding: 9px 13px;
   }
 }

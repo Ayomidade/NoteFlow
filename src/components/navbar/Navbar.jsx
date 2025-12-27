@@ -29,14 +29,14 @@ const Navbar = ({ userInfo }) => {
           </h2>
         </div>
 
-        <SearchBar
+        {/* <SearchBar
           value={searchQuery}
           onChange={({ target }) => {
             setSearchQuery(target.value);
           }}
           handleSearch={handleSearch}
           onclearSearch={clearSearch}
-        />
+        /> */}
 
         <ProfileInfo onLogout={onLogout} userInfo={userInfo} />
       </nav>

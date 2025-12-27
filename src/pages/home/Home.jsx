@@ -8,6 +8,9 @@ import Modal from "react-modal";
 import axiosInstance from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import EmptyCard from "../../components/cards/empty-card/EmptyCard";
+import noNotesImage from "../../assets/images/no-notes.svg";
+import Delete from "../../components/cards/delete-card/Delete";
 
 // fetch notes from server
 export const fetchNotes = async () => {
@@ -15,7 +18,7 @@ export const fetchNotes = async () => {
     const response = await axiosInstance.get("/notes");
     return response.data.notes;
   } catch (error) {
-    if (error.response.status === 403) {
+    if (error.response.status === 403 || error.response.status === 401) {
       localStorage.removeItem("token");
     }
     // console.error("Failed to fetch notes:", error);
@@ -32,6 +35,14 @@ const Home = () => {
     data: null,
   });
   const [deleting, setDeleting] = useState(false);
+  const [isReadingFull, setIsReadingFull] = useState(false);
+  const [selectedFullNote, setSelectedFullNote] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
+
+  const handleReadingFull = (note) => {
+    setIsReadingFull(true);
+    setSelectedFullNote(note);
+  };
 
   // close modal
   const closeModal = () => {
@@ -44,7 +55,7 @@ const Home = () => {
       const notesList = await fetchNotes();
       setNotes(notesList);
     } catch (error) {
-      if (error.response && error.response.status === 403) {
+      if (error.response && error.response?.status === 403) {
         // localStorage.removeItem("token");
         navigate("/login");
       }
@@ -81,7 +92,7 @@ const Home = () => {
         response.data.message.firstname + " " + response.data.message.lastname;
       setUserInfo(fullName);
     } catch (error) {
-      if (error.response.status === 403) {
+      if (error.response?.status === 403 || error.response?.status === 401) {
         // localStorage.removeItem("token");
         navigate("/login");
       }
@@ -94,21 +105,30 @@ const Home = () => {
   }, []);
 
   // Edit note handler
-  const handleEditNOte = (note) => {
+  const handleEditNote = (note) => {
     setOpenEditModal({ isShow: true, type: "edit", data: note });
+  };
+
+  const confirmDelete = (noteId) => {
+    setDeleting(true);
+    setDeletingId(noteId);
+  };
+
+  const cancelDelete = () => {
+    setDeleting(false);
+    setDeletingId(null);
   };
 
   // Delete note handler
   const deleteNote = async (noteId) => {
-    setDeleting(true);
     try {
       await axiosInstance.delete(`/notes/${noteId}`);
       handleFetchNotes();
     } catch (error) {
-      if (error.response.status === 403) {
+      if (error.response?.status === 403) {
         navigate("/login");
       }
-    }finally{
+    } finally {
       setDeleting(false);
     }
   };
@@ -117,7 +137,7 @@ const Home = () => {
       <Navbar userInfo={userInfo} />
 
       <div className="container">
-        {notes ? (
+        {notes.length > 0 ? (
           <div className="notes-grid">
             {notes.map((note) => (
               <NoteCard
@@ -125,23 +145,51 @@ const Home = () => {
                 title={note.title}
                 content={note.content}
                 date={note.updatedAt}
-                tags={note._id}
+                // tags={note._id}
                 isPinned={true}
                 onEdit={() => {
-                  handleEditNOte(note);
+                  handleEditNote(note);
                 }}
                 onDelete={() => {
-                  deleteNote(note._id);
+                  confirmDelete(note._id);
                 }}
                 onPinNote={() => {}}
+                setIsReadingFull={() => handleReadingFull(note)}
               />
             ))}
           </div>
         ) : (
-          <p>No note found</p>
+          <EmptyCard
+            imgSrc={noNotesImage}
+            message={"No notes available. Create a new note!"}
+          />
         )}
 
-        {deleting && <div className="deleting-overlay">Deleting...</div>}
+        {isReadingFull && selectedFullNote && (
+          <div className="fullnote-overlay">
+            <div className="fullnote-container">
+              <h2>Full Note Content</h2>
+              <h3 className="fullnote-title">{selectedFullNote.title}</h3>
+              <p className="fullnote-content">{selectedFullNote.content}</p>
+              <button
+                className="close-fullnote-btn"
+                onClick={() => {
+                  setIsReadingFull(false);
+                  setSelectedFullNote(null);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
+        {deleting && (
+          <Delete
+            cancelDelete={cancelDelete}
+            confirmDelete={() => deleteNote(deletingId)}
+          />
+        )}
 
         <button
           className="new-btn"

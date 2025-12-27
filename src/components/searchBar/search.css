@@ -29,3 +29,13 @@
 .clear-icon:hover {
   color: var(--color-secondary);
 }
+
+@media (max-width: 600px) {
+  .searchbar-container {
+    padding: 3px 8px;
+  }
+
+  .searchbar {
+    padding: 3px 12px;
+  }
+}

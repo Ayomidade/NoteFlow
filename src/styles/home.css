@@ -28,22 +28,22 @@
   justify-content: center;
   align-items: center;
   height: 50px;
-  position:fixed;
+  position: fixed;
   bottom: 40px;
-  right:10px;
-  cursor:pointer
+  right: 10px;
+  cursor: pointer
 }
 
-.note-modal{
+.note-modal {
   width: 50%;
   background: var(--color-bg);
   padding: 20px;
-  margin:  auto;
+  margin: auto;
   margin-top: 120px;
   border-radius: 10px;
 }
 
-.deleting-overlay{
+.deleting-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -58,11 +58,80 @@
   z-index: 1000;
 }
 
+.fullnote-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.fullnote-container {
+  background: var(--color-bg);
+  padding: 30px;
+  border-radius: 10px;
+  max-height: 80%;
+  overflow-y: auto;
+  width: 60%;
+}
+
+.fullnote-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.fullnote-content {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-break: anywhere;
+  line-height: 1.6;
+}
+
+.close-fullnote-btn {
+  padding: 10px 20px;
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fullnote-container h2 {
+  margin-top: 0;
+  text-align: center;
+  font-size: 22px;
+}
+
 @media (max-width: 768px) {
-  .note-modal{
+  .note-modal {
     width: 80%;
   }
-  .notes-grid{
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+
+  .notes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .fullnote-container {
+    width: 80%;
+  }
+
+  .fullnote-title {
+    font-size: 18px;
+  }
+  .fullnote-content{
+    font-size: 14px;
+    line-height:1.4;
+  }
+  .close-fullnote-btn{
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+  .fullnote-container h2{
+    font-size: 20px;
   }
 }

@@ -1,0 +1,23 @@
+.no-note-img{
+    width: 450px;
+    margin: 20px 0;
+}
+
+.no-note-message{
+  font-size: 14px;
+  color: #555;
+}
+
+.no-note-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+@media (max-width: 600px) {
+    .no-note-img{
+        width: 300px;
+    }
+}

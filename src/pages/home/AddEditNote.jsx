@@ -13,10 +13,11 @@ const AddEditNote = ({ onClose, onSuccess, note, type }) => {
   const [error, setError] = useState(null);
   const { id } = useParams();
 
+  const params = useParams();
   const addNote = async () => {
     setLoading(true);
     try {
-      const noteData = { title, content, tags };
+      const noteData = { title, content };
       // API CALL TO ADD
       const response = await axiosInstance.post("/notes", noteData);
       if (response.data) {
@@ -27,6 +28,8 @@ const AddEditNote = ({ onClose, onSuccess, note, type }) => {
       if (error.response && error.response.status === 401) {
         localStorage.removeItem("token");
         navigate("/login");
+      } else {
+        setError("Failed to add new note. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -35,10 +38,11 @@ const AddEditNote = ({ onClose, onSuccess, note, type }) => {
 
   const editNote = async () => {
     setLoading(true);
+    const noteId = note._id;
     try {
-      const noteData = { title, content, tags };
+      const noteData = { title, content };
       // API TO EDIT NOTE
-      const response = await axiosInstance.patch(`/notes/${id}`, noteData);
+      const response = await axiosInstance.patch(`/notes/${noteId}`, noteData);
       if (response.data) {
         if (onSuccess) await onSuccess();
         onClose();
@@ -48,10 +52,13 @@ const AddEditNote = ({ onClose, onSuccess, note, type }) => {
       if (error.response && error.response.status === 401) {
         localStorage.removeItem("token");
         navigate("/login");
+      } else {
+        setError("Failed to edit the note. Please try again.");
       }
     } finally {
       setLoading(false);
     }
+    // console.log(noteId);
   };
 
   const handleNote = () => {
@@ -97,10 +104,10 @@ const AddEditNote = ({ onClose, onSuccess, note, type }) => {
           />
         </div>
 
-        <div className="edit-tag-container">
+        {/* <div className="edit-tag-container">
           <label className="input-label">Tags</label>
           <TagInput tags={tags} setTags={setTags} />
-        </div>
+        </div> */}
 
         {error && <p className="auth-error">{error}</p>}
 
@@ -109,7 +116,14 @@ const AddEditNote = ({ onClose, onSuccess, note, type }) => {
           onClick={handleNote}
           disabled={loading}
         >
-          {loading ? "Please wait..." : "Add Note"}
+          {/* {loading ? "Please wait..." : "Add Note"} */}
+          {type === "edit"
+            ? loading
+              ? "Please wait..."
+              : "Update Note"
+            : loading
+            ? "Please wait..."
+            : "Add Note"}
         </button>
       </div>
     </>

@@ -84,3 +84,9 @@
   align-items: center;
   margin-top: 2px;
 }
+
+.more-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+}

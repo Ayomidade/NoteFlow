@@ -30,10 +30,13 @@
   background-color: transparent;
   border: none;
   text-decoration: underline;
-  /* font-weight: 600; */
+  font-weight: 600;
   margin: 0;
   cursor: pointer;
   text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .logout-icon {
@@ -43,4 +46,46 @@
 
 .logout-icon:hover {
   color: var(--color-primary);
+}
+
+.mobile-profile-info {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .profile-name {
+    font-size: 13px;
+  }
+
+  .profile-initial {
+    padding: 6px;
+    font-size: 14px;
+  }
+
+  .profile-info {
+    gap: 5px;
+    display: none;
+  }
+
+  .mobile-profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .mobile-profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    position: absolute;
+    top: 70px;
+    background-color: var(--color-bg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    width: 80px;
+    right: 0px;
+  }
 }

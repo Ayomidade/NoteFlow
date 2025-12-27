@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 import { MdCreate, MdDelete, MdOutlinePushPin } from "react-icons/md";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const NoteCard = ({
   title,
@@ -12,6 +13,7 @@ const NoteCard = ({
   onEdit,
   onDelete,
   onPinNote,
+  setIsReadingFull
 }) => {
   return (
     <>
@@ -24,18 +26,24 @@ const NoteCard = ({
             </span>
           </div>
 
-          <MdOutlinePushPin
+          {/* <MdOutlinePushPin
             onClick={onPinNote}
             className={`icon-btn ${isPinned ? "pinned" : "not-pinned"}`}
-          />
+          /> */}
         </div>
         <p className="note-content">
           {content?.slice(0, 90)}
-          {content && content.length > 60 ? "..." : ""}
+          {content && content.length > 60 ? (
+            <>
+              ...<a onClick={setIsReadingFull} className="more-link">more</a>
+            </>
+          ) : (
+            ""
+          )}
         </p>
 
         <div className="second-inner-container">
-          <div className="note-tag">{tags}</div>
+          {/* <div className="note-tag">{tags}</div> */}
 
           <div className="note-btn">
             <MdCreate className="edit-btn" onClick={onEdit} />

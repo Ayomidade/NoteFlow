@@ -60,8 +60,8 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="footer">
-        <p>Â© {new Date().getFullYear()} NoteFlow. Built by You.</p>
-        <a href="https://github.com/" target="_blank" rel="noreferrer">
+        <p>&copy; {new Date().getFullYear()} NoteFlow. Built by You.</p>
+        <a href="https://github.com/ayomidade" target="_blank" rel="noreferrer">
           GitHub
         </a>
       </footer>
