@@ -4,7 +4,7 @@
   margin-bottom: 8px;
 }
 
-.auth-form{
+.auth-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -17,6 +17,7 @@
   font-size: 14px;
   color: var(--color-primary);
 }
+
 .input-box:focus {
   outline: none;
   border-color: var(--color-accent);
@@ -66,6 +67,4 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 } */
 
-@media(max-width:768px){
-  
-}
+@media(max-width:768px) {}

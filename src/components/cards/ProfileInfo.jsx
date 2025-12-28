@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./profile.css";
 import { getInitials } from "../../utils/helper";
 import { FaSignOutAlt } from "react-icons/fa";
+import Spinner from "../pre-loader/spinner/Spinner";
 
-const ProfileInfo = ({ onLogout, userInfo }) => {
+const ProfileInfo = ({ onLogout, userInfo, loggingOut }) => {
   const [showProfile, setShowProfile] = useState(false);
 
   const toggleShowProfile = () => {
@@ -30,7 +31,7 @@ const ProfileInfo = ({ onLogout, userInfo }) => {
           <div className="mobile-profile-details">
             <p className="profile-name">{userInfo}</p>
             <button className="logout-btn" onClick={onLogout}>
-              Logout
+              {loggingOut ? <Spinner /> : "Logout"}
               <FaSignOutAlt />
             </button>
           </div>

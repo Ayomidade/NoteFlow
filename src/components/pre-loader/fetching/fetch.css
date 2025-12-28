@@ -1,0 +1,41 @@
+.note-skeleton {
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg-secondary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.line {
+  height: 10px;
+  background: #e0e0e0;
+  margin-bottom: 11px;
+  border-radius: 8px;
+  animation: pulse 1.2s infinite;
+}
+
+.line.short {
+  width: 50%;
+}
+
+.line.medium {
+  width: 70%;
+}
+
+.line.long {
+  width: 90%;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}

@@ -11,6 +11,7 @@ import moment from "moment";
 import EmptyCard from "../../components/cards/empty-card/EmptyCard";
 import noNotesImage from "../../assets/images/no-notes.svg";
 import Delete from "../../components/cards/delete-card/Delete";
+import Fetching from "../../components/pre-loader/fetching/Fetching";
 
 // fetch notes from server
 export const fetchNotes = async () => {
@@ -38,6 +39,7 @@ const Home = () => {
   const [isReadingFull, setIsReadingFull] = useState(false);
   const [selectedFullNote, setSelectedFullNote] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+  const [fetching, setFetching] = useState(false);
 
   const handleReadingFull = (note) => {
     setIsReadingFull(true);
@@ -51,6 +53,7 @@ const Home = () => {
 
   // fetch notes from server
   const handleFetchNotes = async () => {
+    setFetching(true);
     try {
       const notesList = await fetchNotes();
       setNotes(notesList);
@@ -59,6 +62,8 @@ const Home = () => {
         // localStorage.removeItem("token");
         navigate("/login");
       }
+    } finally {
+      setFetching(false);
     }
   };
 
@@ -136,85 +141,89 @@ const Home = () => {
     <>
       <Navbar userInfo={userInfo} />
 
-      <div className="container">
-        {notes.length > 0 ? (
-          <div className="notes-grid">
-            {notes.map((note) => (
-              <NoteCard
-                key={note._id}
-                title={note.title}
-                content={note.content}
-                date={note.updatedAt}
-                // tags={note._id}
-                isPinned={true}
-                onEdit={() => {
-                  handleEditNote(note);
-                }}
-                onDelete={() => {
-                  confirmDelete(note._id);
-                }}
-                onPinNote={() => {}}
-                setIsReadingFull={() => handleReadingFull(note)}
-              />
-            ))}
-          </div>
-        ) : (
-          <EmptyCard
-            imgSrc={noNotesImage}
-            message={"No notes available. Create a new note!"}
-          />
-        )}
-
-        {isReadingFull && selectedFullNote && (
-          <div className="fullnote-overlay">
-            <div className="fullnote-container">
-              <h2>Full Note Content</h2>
-              <h3 className="fullnote-title">{selectedFullNote.title}</h3>
-              <p className="fullnote-content">{selectedFullNote.content}</p>
-              <button
-                className="close-fullnote-btn"
-                onClick={() => {
-                  setIsReadingFull(false);
-                  setSelectedFullNote(null);
-                }}
-              >
-                Close
-              </button>
+      {fetching ? (
+        <Fetching />
+      ) : (
+        <div className="container">
+          {notes.length > 0 ? (
+            <div className="notes-grid">
+              {notes.map((note) => (
+                <NoteCard
+                  key={note._id}
+                  title={note.title}
+                  content={note.content}
+                  date={note.updatedAt}
+                  // tags={note._id}
+                  isPinned={true}
+                  onEdit={() => {
+                    handleEditNote(note);
+                  }}
+                  onDelete={() => {
+                    confirmDelete(note._id);
+                  }}
+                  onPinNote={() => {}}
+                  setIsReadingFull={() => handleReadingFull(note)}
+                />
+              ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <EmptyCard
+              imgSrc={noNotesImage}
+              message={"No notes available. Create a new note!"}
+            />
+          )}
 
-        {deleting && (
-          <Delete
-            cancelDelete={cancelDelete}
-            confirmDelete={() => deleteNote(deletingId)}
-          />
-        )}
+          {isReadingFull && selectedFullNote && (
+            <div className="fullnote-overlay">
+              <div className="fullnote-container">
+                <h2>Full Note Content</h2>
+                <h3 className="fullnote-title">{selectedFullNote.title}</h3>
+                <p className="fullnote-content">{selectedFullNote.content}</p>
+                <button
+                  className="close-fullnote-btn"
+                  onClick={() => {
+                    setIsReadingFull(false);
+                    setSelectedFullNote(null);
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
 
-        <button
-          className="new-btn"
-          onClick={() =>
-            setOpenEditModal({ isShow: true, type: "add", data: null })
-          }
-        >
-          <MdAdd className="new-note" />
-        </button>
+          {deleting && (
+            <Delete
+              cancelDelete={cancelDelete}
+              confirmDelete={() => deleteNote(deletingId)}
+            />
+          )}
 
-        <Modal
-          isOpen={openEditModal.isShow}
-          onRequestClose={closeModal}
-          style={{ overlay: { backgroundColor: "rgba(0,0,0,0.2)" } }}
-          contentLabel=""
-          className="note-modal"
-        >
-          <AddEditNote
-            onClose={closeModal}
-            onSuccess={handleFetchNotes}
-            type={openEditModal.type}
-            note={openEditModal.data}
-          />
-        </Modal>
-      </div>
+          <button
+            className="new-btn"
+            onClick={() =>
+              setOpenEditModal({ isShow: true, type: "add", data: null })
+            }
+          >
+            <MdAdd className="new-note" />
+          </button>
+
+          <Modal
+            isOpen={openEditModal.isShow}
+            onRequestClose={closeModal}
+            style={{ overlay: { backgroundColor: "rgba(0,0,0,0.2)" } }}
+            contentLabel=""
+            className="note-modal"
+          >
+            <AddEditNote
+              onClose={closeModal}
+              onSuccess={handleFetchNotes}
+              type={openEditModal.type}
+              note={openEditModal.data}
+            />
+          </Modal>
+        </div>
+      )}
     </>
   );
 };

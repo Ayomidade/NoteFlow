@@ -38,17 +38,17 @@ export default function Landing() {
       {/* Features Section */}
       <section className="features">
         <div className="feature-card">
-          <h3>âš¡ Speed</h3>
+          <h3>⚡︎ Speed</h3>
           <p>Instant load time and quick note creation.</p>
         </div>
 
         <div className="feature-card">
-          <h3>ðŸ”’ Security</h3>
+          <h3>🛡️ Security</h3>
           <p>Your notes are protected with secure login tokens.</p>
         </div>
 
         <div className="feature-card">
-          <h3>ðŸŒ Access Anywhere</h3>
+          <h3>Access Anywhere</h3>
           <p>Use it on mobile or desktop, no installation needed.</p>
         </div>
 
@@ -60,7 +60,7 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="footer">
-        <p>&copy; {new Date().getFullYear()} NoteFlow. Built by You.</p>
+        <p>&copy; {new Date().getFullYear()} NoteFlow. Built by Myk3l.</p>
         <a href="https://github.com/ayomidade" target="_blank" rel="noreferrer">
           GitHub
         </a>

@@ -106,7 +106,6 @@
   text-align: center;
   font-size: 22px;
 }
-
 @media (max-width: 768px) {
   .note-modal {
     width: 80%;
@@ -123,15 +122,18 @@
   .fullnote-title {
     font-size: 18px;
   }
-  .fullnote-content{
+
+  .fullnote-content {
     font-size: 14px;
-    line-height:1.4;
+    line-height: 1.4;
   }
-  .close-fullnote-btn{
+
+  .close-fullnote-btn {
     font-size: 14px;
     padding: 8px 10px;
   }
-  .fullnote-container h2{
+
+  .fullnote-container h2 {
     font-size: 20px;
   }
 }

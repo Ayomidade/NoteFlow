@@ -6,6 +6,7 @@ import { emailValidation } from "../../utils/helper";
 import AuthLayout from "../../components/layouts/Layout";
 import "../../styles/auth.css";
 import axiosInstance from "../../utils/axios";
+import AppLoader from "../../components/pre-loader/AppLoader";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -63,6 +64,7 @@ const Login = () => {
       {/* <Navbar /> */}
 
       <AuthLayout>
+        {loading && <AppLoader loading={loading} />}
         {/* <div className="form-container">
           <div className="form-inner-container"> */}
         <form onSubmit={handleLogin} className="auth-form">
@@ -94,6 +96,7 @@ const Login = () => {
             Not registered yet? <Link to={"/signup"}>Create an Account</Link>
           </p>
         </form>
+
         {/* </div>
         </div> */}
       </AuthLayout>
