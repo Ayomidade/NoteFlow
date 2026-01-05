@@ -88,8 +88,9 @@
 .fullnote-content {
   font-size: 16px;
   margin-bottom: 20px;
-  line-break: anywhere;
   line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 .close-fullnote-btn {

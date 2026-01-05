@@ -1,6 +1,7 @@
 import React from "react";
 import "./layout.css";
 import { useNavigate } from "react-router-dom";
+import locked from "/locked.png"
 
 export default function AuthLayout({ children }) {
   const navigate = useNavigate();
@@ -23,16 +24,7 @@ export default function AuthLayout({ children }) {
 
       {/* RIGHT SIDE */}
       <div className="auth-right">
-        <div className="auth-right-content">
-          <h1 className="auth-hero-title">
-            Enter the future <br />
-            of Notes, <span>today.</span>
-          </h1>
-          <p className="auth-hero-sub">Fast. Secure. Always with you.</p>
-
-          {/* Placeholder mockup block */}
-          <div className="auth-card-mock"></div>
-        </div>
+          <img src={locked} alt="lock" />
       </div>
     </div>
   );
